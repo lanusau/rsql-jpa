@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.core.convert.converter.ConverterRegistry;
 
 import javax.persistence.EntityManagerFactory;
 
@@ -17,22 +18,14 @@ import javax.persistence.EntityManagerFactory;
  */
 @Configuration
 //@ConditionalOnBean(EntityManagerFactory.class)
-//@ConditionalOnMissingBean(RSQLSpecificationFactory.class)
+@ConditionalOnMissingBean(RSQLSpecificationFactory.class)
 //@ConditionalOnProperty(prefix = "rsq.jpa", name = "enabled", matchIfMissing = true)
 public class RSQLJpaAutoConfiguration {
 
     @Bean
-    public RSQLSpecificationFactory rsqlSpecificationFactory(ConversionService conversionService, EntityManagerFactory entityManagerFactory) {
+    public RSQLSpecificationFactory rsqlSpecificationFactory(ConversionService conversionService, ConverterRegistry converterRegistry, EntityManagerFactory entityManagerFactory) {
+        converterRegistry.addConverter(new LocalDateTimeConverter());
+        converterRegistry.addConverter(new LocalDateConverter());
         return new RSQLSpecificationFactory(conversionService, entityManagerFactory);
-    }
-
-    @Bean
-    public LocalDateTimeConverter localDateTimeConverter() {
-        return new LocalDateTimeConverter();
-    }
-
-    @Bean
-    public LocalDateConverter localDateConverter() {
-        return new LocalDateConverter();
     }
 }
