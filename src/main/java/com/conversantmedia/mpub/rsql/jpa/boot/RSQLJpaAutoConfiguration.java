@@ -16,9 +16,9 @@ import javax.persistence.EntityManagerFactory;
  * Spring Boot autoconfiguration for rSQL JPA
  */
 @Configuration
-@ConditionalOnBean(EntityManagerFactory.class)
-@ConditionalOnMissingBean(RSQLSpecificationFactory.class)
-@ConditionalOnProperty(prefix = "rsq.jpa", name = "enabled", matchIfMissing = true)
+//@ConditionalOnBean(EntityManagerFactory.class)
+//@ConditionalOnMissingBean(RSQLSpecificationFactory.class)
+//@ConditionalOnProperty(prefix = "rsq.jpa", name = "enabled", matchIfMissing = true)
 public class RSQLJpaAutoConfiguration {
 
     @Bean
